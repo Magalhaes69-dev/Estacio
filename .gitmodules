@@ -1,0 +1,6 @@
+[submodule "1-periodo/desafio-logica-super-trunfo"]
+	path = 1-periodo/desafio-logica-super-trunfo
+	url = https://github.com/Cursos-TI/desafio-l-gica-super-trunfo-Magalhaes69-dev.git
+[submodule "1-periodo/desafio-cadastro-cartas"]
+	path = 1-periodo/desafio-cadastro-cartas
+	url = https://github.com/Cursos-TI/desafio-cadastro-das-cartas-no-super-trunfo-Magalhaes69-dev.git
