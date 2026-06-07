@@ -95,6 +95,68 @@ body.theme-social {
     margin: 2rem 0;
 }
 
+/* Responsividade para elementos de Markdown (Tabelas e Código) */
+.prose {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.prose table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.prose table th,
+.prose table td {
+    padding: 0.75rem;
+    border: 1px solid rgba(109, 166, 122, 0.2);
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.prose table th {
+    background-color: rgba(109, 166, 122, 0.05);
+    font-weight: 700;
+}
+
+.prose pre {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: #f4fafd;
+    border: 1px solid rgba(109, 166, 122, 0.2);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.prose code {
+    font-family: monospace;
+    font-size: 0.9rem;
+    background-color: rgba(109, 166, 122, 0.1);
+    color: #1b4332;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.prose pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    word-break: normal;
+    white-space: pre;
+}
+
 /* Efeito hover premium para os links da navegação desktop */
 nav.hidden.md\:flex a {
     position: relative;
