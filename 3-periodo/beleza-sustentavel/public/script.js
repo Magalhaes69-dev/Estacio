@@ -92,43 +92,30 @@ window.tailwind.config = {
     },
 };
 
-// 2. Funções de Controle de Interface
+// 2. Funções de controle de interface
 
 /**
- * Alterna a visibilidade do Menu Lateral (Drawer) em dispositivos móveis
+ * Alterna a visibilidade do menu lateral (drawer) em dispositivos móveis
  */
 function toggleDrawer() {
     const drawer = document.getElementById('nav-drawer');
     const overlay = document.getElementById('drawer-overlay');
     if (!drawer || !overlay) return;
-    const isOpen = drawer.classList.contains('translate-x-0');
-
-    if (isOpen) {
-        drawer.classList.remove('translate-x-0');
-        drawer.classList.add('-translate-x-full');
-        overlay.classList.add('opacity-0', 'pointer-events-none');
-        overlay.classList.remove('opacity-100');
-    } else {
-        drawer.classList.add('translate-x-0');
-        drawer.classList.remove('-translate-x-full');
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
-        overlay.classList.add('opacity-100');
-    }
+    const isOpen = drawer.classList.toggle('translate-x-0');
+    drawer.classList.toggle('-translate-x-full', !isOpen);
+    overlay.classList.toggle('opacity-0', !isOpen);
+    overlay.classList.toggle('pointer-events-none', !isOpen);
+    overlay.classList.toggle('opacity-100', isOpen);
 }
 
 /**
- * Abre o modal "Sobre o Autor" e carrega o conteúdo Markdown do arquivo autor.md
- * @param {Event} event - O evento de clique
+ * Abre um modal genérico pelo ID com efeitos de transição
+ * @param {string} modalId - ID do elemento do modal
  */
-function abrirModalAutor(event) {
-    if (event) {
-        event.preventDefault();
-    }
-    const modal = document.getElementById('modal-autor');
-    const modalBody = document.getElementById('modal-autor-body');
-    if (!modal || !modalBody) return;
+function abrirModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
 
-    // Mostra o contêiner do modal
     modal.classList.remove('hidden');
     // Pequeno atraso para permitir que a transição CSS funcione
     setTimeout(() => {
@@ -138,54 +125,14 @@ function abrirModalAutor(event) {
             contentCard.classList.remove('scale-95', 'opacity-0');
         }
     }, 10);
-
-    // Se o conteúdo já foi carregado anteriormente, não faz a requisição novamente
-    if (modalBody.dataset.loaded === 'true') {
-        return;
-    }
-
-    // Exibe indicador de carregamento
-    modalBody.innerHTML = `
-        <div class="flex justify-center items-center py-8">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-            <span class="ml-3 text-on-surface-variant font-label-md">Carregando dados...</span>
-        </div>
-    `;
-
-    // Carrega o arquivo autor.md da pasta raiz pública
-    fetch('autor.md')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Não foi possível carregar o arquivo autor.md');
-            }
-            return response.text();
-        })
-        .then(markdownText => {
-            // Verifica se a biblioteca Marked.js está disponível via CDN
-            if (typeof marked !== 'undefined') {
-                modalBody.innerHTML = marked.parse(markdownText);
-            } else {
-                // Fallback básico caso o marked.js falhe ao carregar
-                modalBody.innerHTML = parseMarkdownSimple(markdownText);
-            }
-            modalBody.dataset.loaded = 'true';
-        })
-        .catch(error => {
-            console.error('Erro ao carregar dados do autor:', error);
-            modalBody.innerHTML = `
-                <div class="p-4 bg-error-container text-on-error-container rounded-lg">
-                    <p class="font-bold">Erro ao carregar informações</p>
-                    <p class="text-sm">Não foi possível carregar o perfil do autor. Por favor, tente novamente.</p>
-                </div>
-            `;
-        });
 }
 
 /**
- * Fecha o modal "Sobre o Autor"
+ * Fecha um modal genérico pelo ID com efeitos de transição
+ * @param {string} modalId - ID do elemento do modal
  */
-function fecharModalAutor() {
-    const modal = document.getElementById('modal-autor');
+function fecharModal(modalId) {
+    const modal = document.getElementById(modalId);
     if (!modal) return;
 
     modal.classList.add('opacity-0', 'pointer-events-none');
@@ -201,17 +148,171 @@ function fecharModalAutor() {
 }
 
 /**
- * Parser simples de Markdown para garantir funcionamento caso a biblioteca CDN falhe
- * @param {string} md - Texto puro em Markdown
- * @returns {string} - Código HTML gerado
+ * Carrega um arquivo Markdown por AJAX e renderiza no contêiner especificado.
+ * Suporta biblioteca marked.js ou fallback simples se marked não estiver definido.
+ * @param {string} path - Caminho para o arquivo markdown (.md)
+ * @param {HTMLElement|string} container - Elemento contêiner do DOM ou seu ID
+ * @param {function} [onSuccess] - Callback opcional executado após o carregamento e renderização bem-sucedidos
+ * @param {function} [onError] - Callback opcional executado se ocorrer um erro durante o fetch ou parse
  */
+function carregarERenderizarMarkdown(path, container, onSuccess, onError) {
+    const el = typeof container === 'string' ? document.getElementById(container) : container;
+    if (!el) {
+        console.error('Contêiner não encontrado para renderização:', container);
+        return;
+    }
+
+    fetch(path)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Não foi possível carregar o arquivo: ${path}`);
+            }
+            return response.text();
+        })
+        .then(markdownText => {
+            if (typeof marked !== 'undefined') {
+                el.innerHTML = marked.parse(markdownText);
+            } else {
+                el.innerHTML = parseMarkdownSimple(markdownText);
+            }
+            if (typeof onSuccess === 'function') {
+                onSuccess();
+            }
+        })
+        .catch(error => {
+            console.error(`Erro ao carregar Markdown (${path}):`, error);
+            if (typeof onError === 'function') {
+                onError(error);
+            }
+        });
+}
+
+/**
+ * Abre o modal "sobre o autor" e carrega o conteúdo Markdown do arquivo autor.md
+ * @param {Event} event - O evento de clique
+ */
+function abrirModalAutor(event) {
+    if (event) {
+        event.preventDefault();
+    }
+    abrirModal('modal-autor');
+
+    const modalBody = document.getElementById('modal-autor-body');
+    if (!modalBody) return;
+
+    // Se o conteúdo já foi carregado anteriormente, não faz a requisição novamente
+    if (modalBody.dataset.loaded === 'true') {
+        return;
+    }
+
+    // Exibe indicador de carregamento
+    modalBody.innerHTML = `
+        <div class="flex justify-center items-center py-8">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <span class="ml-3 text-on-surface-variant font-label-md">Carregando dados...</span>
+        </div>
+    `;
+
+    carregarERenderizarMarkdown('autor.md', modalBody, 
+        () => {
+            modalBody.dataset.loaded = 'true';
+        },
+        (error) => {
+            modalBody.innerHTML = `
+                <div class="p-4 bg-error-container text-on-error-container rounded-lg">
+                    <p class="font-bold">Erro ao carregar informações</p>
+                    <p class="text-sm">Não foi possível carregar o perfil do autor. Por favor, tente novamente.</p>
+                </div>
+            `;
+        }
+    );
+}
+
+/**
+ * Fecha o modal "sobre o autor"
+ */
+function fecharModalAutor() {
+    fecharModal('modal-autor');
+}
+
 function parseMarkdownSimple(md) {
-    return md
-        .replace(/^#\s+(.*)$/gm, '<h1 class="text-headline-lg font-headline-lg text-primary border-b border-outline-variant/30 pb-2 mb-4">$1</h1>')
-        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-on-surface">$1</strong>')
-        .replace(/\n\n/g, '</p><p class="mb-3 font-body-md text-body-md text-on-surface-variant">')
-        .replace(/\n/g, '<br>')
-        .replace(/^(.*)$/s, '<p class="mb-3 font-body-md text-body-md text-on-surface-variant">$1</p>');
+    // Helper function for inline formatting
+    const parseInline = (text) => {
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-on-surface">$1</strong>')
+            .replace(/`([^`]+)`/g, '<code class="bg-surface-variant/50 px-1 rounded font-mono text-sm">$1</code>')
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-primary hover:underline" target="_blank">$1</a>');
+    };
+
+    const blocks = md.split(/\n\n+/);
+    const htmlBlocks = blocks.map(block => {
+        block = block.trim();
+        if (!block) return '';
+        
+        // 1. Bloco de código
+        if (block.startsWith('```')) {
+            const lines = block.split('\n');
+            const codeLines = lines.slice(1, lines.length - (lines[lines.length - 1] === '```' ? 1 : 0));
+            const codeText = codeLines.join('\n')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+            return `<pre class="bg-surface-container-high/40 p-4 rounded-xl font-mono text-sm overflow-x-auto my-4 border border-outline-variant/20"><code class="text-on-surface-variant">${codeText}</code></pre>`;
+        }
+
+        // 2. Linha horizontal
+        if (block === '---' || block === '***') {
+            return `<hr class="my-6 border-t border-outline-variant/30">`;
+        }
+
+        // 3. Títulos (H1, H2, H3)
+        if (block.startsWith('# ')) {
+            return `<h1 class="text-headline-lg font-headline-lg text-primary border-b border-outline-variant/30 pb-2 mb-4">${parseInline(block.substring(2))}</h1>`;
+        }
+        if (block.startsWith('## ')) {
+            return `<h2 class="text-headline-md font-headline-md text-secondary mb-3">${parseInline(block.substring(3))}</h2>`;
+        }
+        if (block.startsWith('### ')) {
+            return `<h3 class="text-body-lg font-bold text-secondary mb-2">${parseInline(block.substring(4))}</h3>`;
+        }
+        
+        // 4. Listas não ordenadas
+        if (block.startsWith('- ') || block.startsWith('* ') || block.startsWith('+ ') || /^\s+[-*+]\s+/.test(block)) {
+            const lines = block.split(/\n/);
+            const items = [];
+            lines.forEach(line => {
+                const trimmedLine = line.trim();
+                if (trimmedLine.startsWith('- ') || trimmedLine.startsWith('* ') || trimmedLine.startsWith('+ ')) {
+                    const cleanItem = trimmedLine.replace(/^[-*+]\s+/, '');
+                    items.push(`<li class="mb-1 font-body-md text-body-md text-on-surface-variant">${parseInline(cleanItem)}</li>`);
+                } else if (trimmedLine && items.length > 0) {
+                    items[items.length - 1] = items[items.length - 1].replace('</li>', `<br>${parseInline(trimmedLine)}</li>`);
+                }
+            });
+            return `<ul class="list-disc ml-6 mb-4">${items.join('')}</ul>`;
+        }
+
+        // 5. Listas ordenadas
+        if (/^\d+\.\s+/.test(block)) {
+            const lines = block.split(/\n/);
+            const items = [];
+            lines.forEach(line => {
+                const trimmedLine = line.trim();
+                if (/^\d+\.\s+/.test(trimmedLine)) {
+                    const cleanItem = trimmedLine.replace(/^\d+\.\s+/, '');
+                    items.push(`<li class="mb-1 font-body-md text-body-md text-on-surface-variant">${parseInline(cleanItem)}</li>`);
+                } else if (trimmedLine && items.length > 0) {
+                    items[items.length - 1] = items[items.length - 1].replace('</li>', `<br>${parseInline(trimmedLine)}</li>`);
+                }
+            });
+            return `<ol class="list-decimal ml-6 mb-4">${items.join('')}</ol>`;
+        }
+
+        // 6. Parágrafo padrão
+        const formattedBlock = parseInline(block).replace(/\n/g, '<br>');
+        return `<p class="mb-3 font-body-md text-body-md text-on-surface-variant">${formattedBlock}</p>`;
+    });
+    return htmlBlocks.filter(b => b).join('');
 }
 
 /**
@@ -225,11 +326,12 @@ function inicializarTutorial() {
     const urlParams = new URLSearchParams(window.location.search);
     const tema = urlParams.get('tema');
 
-    if (!tema) {
+    // Validação estrita para evitar path traversal e DOM-based XSS
+    if (!tema || !/^[a-zA-Z0-9_-]+$/.test(tema)) {
         container.innerHTML = `
             <div class="p-6 bg-error-container text-on-error-container rounded-xl shadow-md max-w-md mx-auto mt-8 text-center">
-                <h2 class="font-headline-md text-headline-md font-bold mb-2">Tema não especificado</h2>
-                <p class="font-body-md mb-4">Por favor, selecione um tema de tutorial válido na página inicial ou nas páginas internas.</p>
+                <h2 class="font-headline-md text-headline-md font-bold mb-2">Tema Inválido</h2>
+                <p class="font-body-md mb-4">O tema solicitado não foi especificado ou contém caracteres inválidos.</p>
                 <a href="index.html" class="inline-flex bg-primary text-white px-6 py-2 rounded-full text-label-md font-label-md hover:bg-primary/95 transition-all">Voltar para a Home</a>
             </div>
         `;
@@ -259,27 +361,19 @@ function inicializarTutorial() {
         });
     });
 
-
-    // Configura o gradiente de fundo suave correspondente ao tema
+    // Configura a classe de tema correspondente no body
     const body = document.body;
-    let bgGradient = '';
-    
-    switch (tema) {
-        case 'ambiental':
-            bgGradient = 'linear-gradient(to top, rgba(153, 212, 165, 0.15) 0%, rgba(244, 250, 253, 1) 100%)';
-            break;
-        case 'economica':
-            bgGradient = 'linear-gradient(to top, rgba(254, 243, 199, 0.25) 0%, rgba(255, 255, 255, 1) 100%)';
-            break;
-        case 'social':
-            bgGradient = 'linear-gradient(to top, rgba(186, 230, 253, 0.2) 0%, rgba(244, 250, 253, 1) 100%)';
-            break;
-        default:
-            bgGradient = 'linear-gradient(to top, rgba(200, 200, 200, 0.1) 0%, rgba(255, 255, 255, 1) 100%)';
-    }
-
     if (body) {
-        body.style.background = bgGradient;
+        // Remove classes de tema anteriores
+        body.classList.remove('theme-ambiental', 'theme-economica', 'theme-social');
+        
+        if (tema === 'ambiental' || tema === 'economica' || tema === 'social') {
+            body.classList.add(`theme-${tema}`);
+            body.style.background = ''; // Garante que estilos inline não sobrescrevam a classe CSS
+        } else {
+            // Caso seja o readme ou outro, aplica o gradiente padrão
+            body.style.background = 'linear-gradient(to top, rgba(200, 200, 200, 0.1) 0%, rgba(255, 255, 255, 1) 100%)';
+        }
     }
 
     // Exibe indicador de carregamento
@@ -294,74 +388,43 @@ function inicializarTutorial() {
     const mdPath = tema === 'readme' ? 'readme.md' : `tutoriais/${tema}.md`;
 
     // Carrega o arquivo Markdown
-    fetch(mdPath)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Não foi possível carregar o arquivo do tutorial');
-            }
-            return response.text();
-        })
-        .then(markdownText => {
-            // Se Marked.js estiver disponível
-            if (typeof marked !== 'undefined') {
-                container.innerHTML = marked.parse(markdownText);
-            } else {
-                // Fallback básico
-                container.innerHTML = parseMarkdownSimple(markdownText);
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao carregar tutorial:', error);
-            container.innerHTML = `
-                <div class="p-6 bg-error-container text-on-error-container rounded-xl shadow-md max-w-md mx-auto mt-8 text-center">
-                    <h2 class="font-headline-md text-headline-md font-bold mb-2">Erro de Carregamento</h2>
-                    <p class="font-body-md mb-4">Não foi possível carregar o tutorial. Detalhes: ${error.message}</p>
-                    <a href="index.html" class="inline-flex bg-primary text-white px-6 py-2 rounded-full text-label-md font-label-md hover:bg-primary/95 transition-all">Voltar para a Home</a>
-                </div>
-            `;
-        });
+    carregarERenderizarMarkdown(mdPath, container, null, (error) => {
+        container.innerHTML = `
+            <div class="p-6 bg-error-container text-on-error-container rounded-xl shadow-md max-w-md mx-auto mt-8 text-center">
+                <h2 class="font-headline-md text-headline-md font-bold mb-2">Erro de Carregamento</h2>
+                <p class="font-body-md mb-4">Não foi possível carregar o tutorial. Detalhes: <span id="error-details"></span></p>
+                <a href="index.html" class="inline-flex bg-primary text-white px-6 py-2 rounded-full text-label-md font-label-md hover:bg-primary/95 transition-all">Voltar para a Home</a>
+            </div>
+        `;
+        const detailsSpan = document.getElementById('error-details');
+        if (detailsSpan) {
+            detailsSpan.textContent = error.message;
+        }
+    });
 }
 
-// 3. Vinculação Dinâmica de Eventos (Event Listeners) após o carregamento do DOM
+// 3. Vinculação dinâmica de eventos (event listeners) após o carregamento do DOM
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializa renderização do tutorial (se for a página tutorial.html)
     inicializarTutorial();
 
-    // Vincular clique do menu hambúrguer no cabeçalho
-    const menuBtn = document.getElementById('menu-button');
-    if (menuBtn) {
-        menuBtn.addEventListener('click', toggleDrawer);
-    }
+    // Vincular controle de abertura/fechamento do menu lateral
+    ['menu-button', 'drawer-overlay', 'drawer-close'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('click', toggleDrawer);
+    });
 
-    // Vincular clique do overlay escurecido do menu lateral
-    const drawerOverlay = document.getElementById('drawer-overlay');
-    if (drawerOverlay) {
-        drawerOverlay.addEventListener('click', toggleDrawer);
-    }
-
-    // Vincular clique do botão de fechar de dentro do menu lateral
-    const drawerCloseBtn = document.getElementById('drawer-close');
-    if (drawerCloseBtn) {
-        drawerCloseBtn.addEventListener('click', toggleDrawer);
-    }
-
-    // Vincular clique do link "Sobre o Autor" no rodapé
+    // Vincular clique do link "sobre o autor" no rodapé
     const linkAutor = document.getElementById('link-autor');
     if (linkAutor) {
         linkAutor.addEventListener('click', abrirModalAutor);
     }
 
-    // Vincular clique do overlay de desfoque do modal do autor
-    const modalOverlay = document.getElementById('modal-overlay');
-    if (modalOverlay) {
-        modalOverlay.addEventListener('click', fecharModalAutor);
-    }
-
-    // Vincular clique do botão fechar (X) do modal do autor
-    const modalCloseBtn = document.getElementById('modal-close');
-    if (modalCloseBtn) {
-        modalCloseBtn.addEventListener('click', fecharModalAutor);
-    }
+    // Vincular controle de fechamento do modal do autor
+    ['modal-overlay', 'modal-close'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('click', fecharModalAutor);
+    });
 
     // Vincular cliques nos links do tutorial para abrir em nova aba programaticamente
     // Isso garante a permissão para fechar a aba com window.close()

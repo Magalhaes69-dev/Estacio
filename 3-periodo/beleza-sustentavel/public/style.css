@@ -1,19 +1,30 @@
-/* Estilos Personalizados - Beleza Sustentável */
+/* Estilos personalizados - Beleza Sustentável */
 
-/* Configuração do fundo com gradiente e altura mínima */
 body {
-    background: linear-gradient(to top, rgba(153, 212, 165, 0.2) 0%, rgba(244, 250, 253, 1) 100%);
     min-height: 100vh;
+    background: linear-gradient(to top, rgba(200, 200, 200, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
-/* Alinhamento dos ícones do Google Material Symbols */
+body.theme-ambiental {
+    background-color: #d0d0a7;
+}
+
+body.theme-economica {
+    background-color: #9ea4ac;
+}
+
+body.theme-social {
+    background-color: #fdf3e7;
+}
+
+/* Alinhamento dos ícones do Google material symbols */
 .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     display: inline-block;
     vertical-align: middle;
 }
 
-/* Transições e Animações para o Modal */
+/* Transições e animações para o modal */
 .modal-overlay {
     transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
 }
@@ -31,7 +42,7 @@ body {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
     line-height: 1.25;
-    border-b: 2px solid rgba(109, 166, 122, 0.2);
+    border-bottom: 2px solid rgba(109, 166, 122, 0.2);
     padding-bottom: 0.75rem;
 }
 
@@ -83,3 +94,167 @@ body {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     margin: 2rem 0;
 }
+
+/* Efeito hover premium para os links da navegação desktop */
+nav.hidden.md\:flex a {
+    position: relative;
+    transition: color 0.3s ease !important;
+}
+
+nav.hidden.md\:flex a:not(.border-b-2)::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #326943; /* Cor primária */
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+nav.hidden.md\:flex a:not(.border-b-2):hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+nav.hidden.md\:flex a:hover {
+    color: #326943 !important;
+}
+
+/* Forçar o arredondamento de bordas em imagens com preenchimento object-cover */
+.img-rounded {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+/* Estilo customizado para chamadas longas e legibilidade aprimorada (Chamada Ambiental e intros) */
+.chamada-ambiental-h1 {
+    font-family: 'Inter', 'Manrope', 'Segoe UI', sans-serif;
+    font-size: 1.5rem; /* Ajustado de 1.125rem para H1 principal */
+    line-height: 1.7;
+    font-weight: 400;
+    color: #1b4332; /* Verde-musgo profundo para excelente contraste e temática */
+    text-align: left;
+    max-width: 65ch; /* Padrão ouro de leitura (60-70 caracteres) */
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .chamada-ambiental-h1 {
+        font-size: 1.75rem; /* Aumentado ligeiramente em telas maiores para presença visual */
+    }
+}
+
+.chamada-ambiental-h1 strong {
+    color: #2d6a4f; /* Verde vibrante sustentável para destaques */
+    font-weight: 700;
+}
+
+/* Classe sugerida para o contêiner de parágrafo longo */
+.tutorial-texto-sustentavel {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.125rem; /* Aproximadamente 18px */
+    line-height: 1.7;
+    font-weight: 400;
+    color: #2c3e50; /* Garante contraste com o fundo existente */
+    text-align: left;
+    max-width: 65ch; /* Limita a largura a cerca de 65 caracteres */
+    margin-bottom: 1.5rem; /* Espaço para o próximo elemento */
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.tutorial-texto-sustentavel strong {
+    color: #2d6a4f; /* Verde associado à sustentabilidade */
+    font-weight: 600;
+}
+
+/* Estilo customizado para a chamada social (H2) da Home */
+.chamada-social-h2 {
+    font-family: 'Inter', 'Manrope', 'Segoe UI', sans-serif;
+    font-size: 1.5rem; /* Ajustado para H2 principal */
+    line-height: 1.7;
+    font-weight: 400;
+    color: #2c3e50; /* Cinza azulado escuro para excelente contraste */
+    text-align: left;
+    max-width: 65ch;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .chamada-social-h2 {
+        font-size: 1.75rem; /* Aumentado ligeiramente em telas maiores */
+    }
+}
+
+.chamada-social-h2 strong {
+    color: #c05621; /* Terracota/laranja queimado para destaques quentes */
+    font-weight: 700;
+}
+
+/* Classe para o contêiner do texto sobre sustentabilidade social */
+.tutorial-texto-social {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.125rem; 
+    line-height: 1.7;
+    font-weight: 400;
+    color: #2c3e50; 
+    text-align: left;
+    max-width: 65ch; 
+    margin-bottom: 1.5rem; 
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.tutorial-texto-social strong {
+    color: #c05621; 
+    font-weight: 600;
+}
+
+/* Estilo customizado para a chamada econômica (H2) da Home */
+.chamada-economica-h2 {
+    font-family: 'Inter', 'Manrope', 'Segoe UI', sans-serif;
+    font-size: 1.5rem; /* Ajustado para H2 principal */
+    line-height: 1.7;
+    font-weight: 400;
+    color: #2c3e50; /* Cinza azulado escuro para excelente contraste */
+    text-align: left;
+    max-width: 65ch;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .chamada-economica-h2 {
+        font-size: 1.75rem; /* Aumentado ligeiramente em telas maiores */
+    }
+}
+
+.chamada-economica-h2 strong {
+    color: #1d4ed8; /* Azul profundo para destaques de eficiência */
+    font-weight: 700;
+}
+
+/* Classe para o contêiner do texto sobre sustentabilidade econômica */
+.tutorial-texto-economico {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.125rem; 
+    line-height: 1.7;
+    font-weight: 400;
+    color: #2c3e50; 
+    text-align: left;
+    max-width: 65ch; 
+    margin-bottom: 1.5rem; 
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.tutorial-texto-economico strong {
+    color: #1d4ed8; 
+    font-weight: 600;
+}
+
+
+
+

@@ -6,83 +6,104 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Tutorial | Beleza Sustentável</title>
     <!-- Fontes do Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Ícones do Google Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    
-    <!-- Configuração e Dependências (Tailwind CSS e Markdown Parser) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Hanken+Grotesk:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Ícones do Google material symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Configuração e dependências (Tailwind CSS e Markdown Parser) -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-    <!-- CSS Modular Customizado -->
+    <!-- CSS modular customizado -->
     <link href="style.css" rel="stylesheet">
 </head>
 
 <body class="font-body-md text-on-surface overflow-x-hidden min-h-screen flex flex-col">
-    <!-- Cabeçalho / Menu de Navegação -->
-    <header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm shadow-primary/10">
+    <!-- Cabeçalho / Menu de navegação -->
+    <header
+        class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm shadow-primary/10">
         <div class="flex justify-between items-center px-container-margin py-base max-w-7xl mx-auto">
             <div class="flex items-center gap-stack-md">
-                <span class="font-headline-xl text-headline-xl tracking-tight text-primary dark:text-primary-fixed-dim">Beleza Sustentável</span>
+                <span
+                    class="font-headline-xl text-headline-xl tracking-tight text-primary dark:text-primary-fixed-dim">Beleza
+                    Sustentável</span>
             </div>
-            
-            <!-- Navegação Desktop -->
+
+            <!-- Navegação desktop -->
             <nav class="hidden md:flex gap-stack-lg">
-                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1" href="index.html">Home</a>
-                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1" href="ambiental.html">Sustentabilidade Ambiental</a>
-                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1" href="social.html">Sustentabilidade Social</a>
-                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1" href="economica.html">Sustentabilidade Econômica</a>
+                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1"
+                    href="index.html">Home</a>
+                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1"
+                    href="ambiental.html">Sustentabilidade Ambiental</a>
+                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1"
+                    href="social.html">Sustentabilidade Social</a>
+                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1"
+                    href="economica.html">Sustentabilidade Econômica</a>
             </nav>
-            
-            <!-- Botão Menu Mobile -->
-            <button id="menu-button" class="md:hidden text-primary p-base active:scale-95 duration-200" aria-label="Abrir menu lateral">
+
+            <!-- Botão menu mobile -->
+            <button id="menu-button" class="md:hidden text-primary p-base active:scale-95 duration-200"
+                aria-label="Abrir menu lateral">
                 <span class="material-symbols-outlined" data-icon="menu">menu</span>
             </button>
         </div>
     </header>
 
-    <!-- Menu Lateral Retrátil (Drawer Celular) -->
-    <div class="fixed inset-0 bg-black/40 z-[55] transition-opacity duration-300 opacity-0 pointer-events-none" id="drawer-overlay"></div>
-    <aside class="fixed inset-y-0 left-0 z-[60] w-80 bg-surface dark:bg-surface-container-low rounded-r-xl shadow-xl transition-transform duration-300 ease-in-out -translate-x-full" id="nav-drawer">
+    <!-- Menu lateral retrátil (drawer celular) -->
+    <div class="fixed inset-0 bg-black/40 z-[55] transition-opacity duration-300 opacity-0 pointer-events-none"
+        id="drawer-overlay"></div>
+    <aside
+        class="fixed inset-y-0 left-0 z-[60] w-80 bg-surface dark:bg-surface-container-low rounded-r-xl shadow-xl transition-transform duration-300 ease-in-out -translate-x-full"
+        id="nav-drawer">
         <div class="p-container-margin border-b border-outline-variant/20 flex justify-between items-center">
             <h2 class="font-headline-md text-headline-md text-primary">Menu Principal</h2>
-            <button id="drawer-close" class="text-primary p-1 active:scale-95 duration-200" aria-label="Fechar menu lateral">
+            <button id="drawer-close" class="text-primary p-1 active:scale-95 duration-200"
+                aria-label="Fechar menu lateral">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
         <nav class="py-stack-md flex flex-col gap-base">
-            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors" href="index.html">
+            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors"
+                href="index.html">
                 <span class="material-symbols-outlined" data-icon="home">home</span>
                 <span class="font-label-md text-label-md">Home</span>
             </a>
-            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors" href="ambiental.html">
+            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors"
+                href="ambiental.html">
                 <span class="material-symbols-outlined" data-icon="park">park</span>
                 <span class="font-label-md text-label-md">Sustentabilidade Ambiental</span>
             </a>
-            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors" href="social.html">
+            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors"
+                href="social.html">
                 <span class="material-symbols-outlined" data-icon="group">group</span>
                 <span class="font-label-md text-label-md">Sustentabilidade Social</span>
             </a>
-            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors" href="economica.html">
+            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors"
+                href="economica.html">
                 <span class="material-symbols-outlined" data-icon="payments">payments</span>
                 <span class="font-label-md text-label-md">Sustentabilidade Econômica</span>
             </a>
         </nav>
     </aside>
 
-    <!-- Conteúdo Principal -->
+    <!-- Conteúdo principal -->
     <main class="flex-1 pt-32 pb-section-gap px-container-margin max-w-4xl mx-auto flex flex-col gap-stack-lg">
-        <!-- Botão Voltar (Topo) -->
+        <!-- Botão voltar (topo) -->
         <div class="w-full flex justify-start">
-            <a id="btn-voltar-topo" href="index.html" class="btn-voltar inline-flex items-center gap-2 text-primary hover:text-primary-container font-semibold transition-colors">
+            <a id="btn-voltar-topo" href="index.html"
+                class="btn-voltar inline-flex items-center gap-2 text-primary hover:text-primary-container font-semibold transition-colors">
                 <span class="material-symbols-outlined">arrow_back</span>
                 Voltar
             </a>
         </div>
-        
-        <!-- Cartão do Tutorial -->
-        <article class="bg-white/80 backdrop-blur-md p-8 md:p-12 rounded-2xl border border-outline-variant/20 shadow-xl shadow-primary/5">
+
+        <!-- Cartão do tutorial -->
+        <article
+            class="bg-white/80 backdrop-blur-md p-8 md:p-12 rounded-2xl border border-outline-variant/20 shadow-xl shadow-primary/5">
             <!-- O conteúdo Markdown do tutorial será renderizado aqui -->
             <div id="tutorial-content" class="prose max-w-none text-on-surface-variant">
                 <div class="flex justify-center items-center py-12">
@@ -90,10 +111,11 @@
                     <span class="ml-4 text-on-surface-variant font-label-md">Preparando o conteúdo...</span>
                 </div>
             </div>
-            
-            <!-- Botão Voltar (Fim) -->
+
+            <!-- Botão voltar (fim) -->
             <div class="w-full flex justify-start mt-8 pt-6 border-t border-outline-variant/20">
-                <a id="btn-voltar-fim" href="index.html" class="btn-voltar inline-flex items-center gap-2 text-primary hover:text-primary-container font-semibold transition-colors">
+                <a id="btn-voltar-fim" href="index.html"
+                    class="btn-voltar inline-flex items-center gap-2 text-primary hover:text-primary-container font-semibold transition-colors">
                     <span class="material-symbols-outlined">arrow_back</span>
                     Voltar para a página anterior
                 </a>
@@ -102,34 +124,42 @@
     </main>
 
     <!-- Rodapé -->
-    <footer class="bg-surface-container-highest dark:bg-surface-container-lowest w-full mt-section-gap py-stack-lg px-container-margin border-t border-outline-variant/20">
-        <p class="font-body-md text-body-md text-on-surface-variant opacity-80 text-center flex flex-wrap justify-center items-center gap-4">
+    <footer
+        class="bg-surface-container-highest dark:bg-surface-container-lowest w-full mt-section-gap py-stack-lg px-container-margin border-t border-outline-variant/20">
+        <p
+            class="font-body-md text-body-md text-on-surface-variant opacity-80 text-center flex flex-wrap justify-center items-center gap-4">
             <span>© 2026 Beleza Sustentável. Todos os direitos reservados.</span>
             <span class="hidden md:inline opacity-40">|</span>
-            <a id="link-autor" href="#" class="text-primary hover:text-primary-container font-semibold transition-colors hover:underline flex items-center gap-1">
+            <a id="link-autor" href="#"
+                class="text-primary hover:text-primary-container font-semibold transition-colors hover:underline flex items-center gap-1">
                 <span class="material-symbols-outlined text-sm">person</span>
                 Sobre o Autor
             </a>
             <span class="hidden md:inline opacity-40">|</span>
-            <a id="link-readme" href="tutorial.html?tema=readme" class="text-primary hover:text-primary-container font-semibold transition-colors hover:underline flex items-center gap-1">
+            <a id="link-readme" href="tutorial.html?tema=readme"
+                class="text-primary hover:text-primary-container font-semibold transition-colors hover:underline flex items-center gap-1">
                 <span class="material-symbols-outlined text-sm">description</span>
                 Documentação do projeto
             </a>
         </p>
     </footer>
 
-    <!-- Modal "Sobre o Autor" -->
-    <div id="modal-autor" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 pointer-events-none transition-all duration-300 ease-in-out">
+    <!-- Modal "Sobre o autor" -->
+    <div id="modal-autor"
+        class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 pointer-events-none transition-all duration-300 ease-in-out">
         <!-- Overlay de desfoque -->
         <div id="modal-overlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm modal-overlay"></div>
-        
-        <!-- Card do Modal -->
-        <div class="relative bg-surface dark:bg-surface-container-low max-w-lg w-full mx-4 p-8 rounded-2xl shadow-2xl z-10 border border-outline-variant/20 transform scale-95 opacity-0 transition-all duration-300 ease-in-out modal-content">
+
+        <!-- Card do modal -->
+        <div
+            class="relative bg-surface dark:bg-surface-container-low max-w-lg w-full mx-4 p-8 rounded-2xl shadow-2xl z-10 border border-outline-variant/20 transform scale-95 opacity-0 transition-all duration-300 ease-in-out modal-content">
             <!-- Botão de fechar -->
-            <button id="modal-close" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary active:scale-95 duration-200 transition-colors" aria-label="Fechar modal">
+            <button id="modal-close"
+                class="absolute top-4 right-4 text-on-surface-variant hover:text-primary active:scale-95 duration-200 transition-colors"
+                aria-label="Fechar modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
-            
+
             <!-- Conteúdo renderizado -->
             <div id="modal-autor-body" class="prose max-w-none text-on-surface-variant">
                 <!-- O conteúdo de autor.md será injetado aqui -->

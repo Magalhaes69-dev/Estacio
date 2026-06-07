@@ -4,136 +4,189 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Beleza Sustentável | Home</title>
+    <title>Salão Ecoeficiente: Gestão e Dicas | Beleza Sustentável</title>
+    <meta name="description"
+        content="Descubra como transformar seu salão de beleza em um negócio sustentável. Dicas práticas de ecoeficiência, gestão de resíduos e economia verde.">
+
     <!-- Fontes do Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Hanken+Grotesk:wght@400;500;600&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
     <!-- Ícones do Google Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    
-    <!-- Configuração e Dependências (Tailwind CSS e Markdown Parser) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Configuração e dependências (Tailwind CSS e Markdown Parser) -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-    <!-- CSS Modular Customizado -->
+    <!-- CSS Modular customizado -->
     <link href="style.css" rel="stylesheet">
 </head>
 
 <body class="font-body-md text-on-surface overflow-x-hidden min-h-screen flex flex-col">
-    <!-- Cabeçalho / Menu de Navegação -->
-    <header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm shadow-primary/10">
+    <!-- Cabeçalho / menu de navegação -->
+    <header
+        class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm shadow-primary/10">
         <div class="flex justify-between items-center px-container-margin py-base max-w-7xl mx-auto">
             <div class="flex items-center gap-stack-md">
-                <span class="font-headline-xl text-headline-xl tracking-tight text-primary dark:text-primary-fixed-dim">Beleza Sustentável</span>
+                <span
+                    class="font-headline-xl text-headline-xl tracking-tight text-primary dark:text-primary-fixed-dim">Beleza
+                    Sustentável</span>
             </div>
-            
-            <!-- Navegação Desktop -->
+
+            <!-- Navegação desktop -->
             <nav class="hidden md:flex gap-stack-lg">
-                <a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary font-label-md text-label-md py-1" href="index.html">Home</a>
-                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1" href="ambiental.html">Sustentabilidade Ambiental</a>
-                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1" href="social.html">Sustentabilidade Social</a>
-                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1" href="economica.html">Sustentabilidade Econômica</a>
+                <a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary font-label-md text-label-md py-1"
+                    href="index.html">Home</a>
+                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1"
+                    href="ambiental.html">Sustentabilidade Ambiental</a>
+                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1"
+                    href="social.html">Sustentabilidade Social</a>
+                <a class="text-on-surface-variant dark:text-outline hover:text-primary transition-colors font-label-md text-label-md py-1"
+                    href="economica.html">Sustentabilidade Econômica</a>
             </nav>
-            
-            <!-- Botão Menu Mobile -->
-            <button id="menu-button" class="md:hidden text-primary p-base active:scale-95 duration-200" aria-label="Abrir menu lateral">
+
+            <!-- Botão menu mobile -->
+            <button id="menu-button" class="md:hidden text-primary p-base active:scale-95 duration-200"
+                aria-label="Abrir menu lateral">
                 <span class="material-symbols-outlined" data-icon="menu">menu</span>
             </button>
         </div>
     </header>
 
-    <!-- Menu Lateral Retrátil (Drawer Celular) -->
-    <div class="fixed inset-0 bg-black/40 z-[55] transition-opacity duration-300 opacity-0 pointer-events-none" id="drawer-overlay"></div>
-    <aside class="fixed inset-y-0 left-0 z-[60] w-80 bg-surface dark:bg-surface-container-low rounded-r-xl shadow-xl transition-transform duration-300 ease-in-out -translate-x-full" id="nav-drawer">
+    <!-- Menu lateral retrátil (drawer celular) -->
+    <div class="fixed inset-0 bg-black/40 z-[55] transition-opacity duration-300 opacity-0 pointer-events-none"
+        id="drawer-overlay"></div>
+    <aside
+        class="fixed inset-y-0 left-0 z-[60] w-80 bg-surface dark:bg-surface-container-low rounded-r-xl shadow-xl transition-transform duration-300 ease-in-out -translate-x-full"
+        id="nav-drawer">
         <div class="p-container-margin border-b border-outline-variant/20 flex justify-between items-center">
             <h2 class="font-headline-md text-headline-md text-primary">Menu Principal</h2>
-            <button id="drawer-close" class="text-primary p-1 active:scale-95 duration-200" aria-label="Fechar menu lateral">
+            <button id="drawer-close" class="text-primary p-1 active:scale-95 duration-200"
+                aria-label="Fechar menu lateral">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
         <nav class="py-stack-md flex flex-col gap-base">
-            <a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98]" href="index.html">
+            <a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98]"
+                href="index.html">
                 <span class="material-symbols-outlined" data-icon="home">home</span>
                 <span class="font-label-md text-label-md">Home</span>
             </a>
-            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors" href="ambiental.html">
+            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors"
+                href="ambiental.html">
                 <span class="material-symbols-outlined" data-icon="park">park</span>
                 <span class="font-label-md text-label-md">Sustentabilidade Ambiental</span>
             </a>
-            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors" href="social.html">
+            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors"
+                href="social.html">
                 <span class="material-symbols-outlined" data-icon="group">group</span>
                 <span class="font-label-md text-label-md">Sustentabilidade Social</span>
             </a>
-            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors" href="economica.html">
+            <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 flex items-center gap-4 active:scale-[0.98] transition-colors"
+                href="economica.html">
                 <span class="material-symbols-outlined" data-icon="payments">payments</span>
                 <span class="font-label-md text-label-md">Sustentabilidade Econômica</span>
             </a>
         </nav>
     </aside>
 
-    <!-- Conteúdo Principal -->
+    <!-- Conteúdo principal -->
     <main class="flex-1 pt-32 pb-section-gap px-container-margin max-w-7xl mx-auto flex flex-col gap-section-gap">
-        <!-- Seção 1: Chamada Ambiental -->
-        <section class="w-full flex justify-start items-center">
-            <div class="max-w-2xl animate-fade-in-up">
-                <h1 class="font-headline-xl text-headline-xl text-primary mb-stack-md leading-snug">
-                    Transforme cada corte em respeito ao planeta: digitalize sua gestão, destine resíduos com inteligência e lidere a beleza do futuro.
+        <!-- Seção 1: Chamada ambiental com imagem do salão -->
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-stack-lg items-center">
+            <div class="md:col-span-5 flex flex-col justify-center pr-0 md:pr-stack-lg animate-fade-in-up order-2 md:order-1">
+                <h1 class="chamada-ambiental-h1 mb-stack-md">
+                    Transforme cada corte em <strong>respeito ao planeta</strong>: digitalize sua gestão, destine
+                    resíduos com <strong>inteligência</strong> e lidere a <strong>beleza do futuro</strong>.
                 </h1>
             </div>
+            <div class="md:col-span-7 relative group animate-fade-in-up order-1 md:order-2">
+                <div
+                    class="absolute -inset-4 bg-primary/5 rounded-xl blur-2xl group-hover:bg-primary/10 transition-colors">
+                </div>
+                <img alt="Salão de beleza sustentável e moderno"
+                    class="relative rounded-xl shadow-2xl w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
+                    src="imagens/salao.png">
+            </div>
         </section>
 
-        <!-- Seção 2: Chamada Social com Imagem do Barbeiro -->
+        <!-- Seção 2: Chamada social com imagem do barbeiro -->
         <section class="grid grid-cols-1 md:grid-cols-12 gap-stack-lg items-center">
             <div class="md:col-span-7 relative group">
-                <div class="absolute -inset-4 bg-primary/5 rounded-xl blur-2xl group-hover:bg-primary/10 transition-colors"></div>
-                <img alt="Barbearia sustentável" class="relative rounded-xl shadow-2xl w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]" src="imagens/barbeiro.png">
+                <div
+                    class="absolute -inset-4 bg-primary/5 rounded-xl blur-2xl group-hover:bg-primary/10 transition-colors">
+                </div>
+                <img alt="Barbeiro cortando cabelo de um senhor idoso"
+                    class="relative rounded-xl shadow-2xl w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
+                    src="imagens/barbeiro.png">
             </div>
             <div class="md:col-span-5 flex flex-col justify-center pl-0 md:pl-stack-lg">
-                <h2 class="font-headline-xl text-headline-xl text-secondary mb-stack-md leading-snug">
-                    Conquiste corações e mentes: valorize cada pessoa, acolha sua comunidade e dê asas à sustentabilidade social.
+                <h2 class="chamada-social-h2 mb-stack-md">
+                    Conquiste <strong>corações e mentes</strong>: valorize <strong>cada pessoa</strong>, acolha sua
+                    <strong>comunidade</strong> e dê asas à <strong>sustentabilidade social</strong>.
                 </h2>
             </div>
         </section>
 
-        <!-- Seção 3: Chamada Econômica -->
-        <section class="w-full flex justify-start items-center">
-            <div class="max-w-2xl">
-                <h2 class="font-headline-xl text-headline-xl text-secondary mb-stack-md leading-snug">
-                    Estanque o desperdício invisível: adote a ecoeficiência e transforme a gestão sustentável em lucro real.
+        <!-- Seção 3: Chamada econômica com imagem da cabeleireira -->
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-stack-lg items-center">
+            <div class="md:col-span-5 flex flex-col justify-center pr-0 md:pr-stack-lg order-2 md:order-1">
+                <h2 class="chamada-economica-h2 mb-stack-md">
+                    Estanque o <strong>desperdício invisível</strong>: adote a <strong>ecoeficiência</strong> e
+                    transforme a <strong>gestão sustentável</strong> em <strong>lucro real</strong>.
                 </h2>
+            </div>
+            <div class="md:col-span-7 relative group order-1 md:order-2">
+                <div
+                    class="absolute -inset-4 bg-primary/5 rounded-xl blur-2xl group-hover:bg-primary/10 transition-colors">
+                </div>
+                <img alt="Cabeleireira realizando procedimento em cliente com foco em ecoeficiência"
+                    class="relative rounded-xl shadow-2xl w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
+                    src="imagens/cabelereira.png">
             </div>
         </section>
     </main>
 
     <!-- Rodapé -->
-    <footer class="bg-surface-container-highest dark:bg-surface-container-lowest w-full mt-section-gap py-stack-lg px-container-margin border-t border-outline-variant/20">
-        <p class="font-body-md text-body-md text-on-surface-variant opacity-80 text-center flex flex-wrap justify-center items-center gap-4">
+    <footer
+        class="bg-surface-container-highest dark:bg-surface-container-lowest w-full mt-section-gap py-stack-lg px-container-margin border-t border-outline-variant/20">
+        <p
+            class="font-body-md text-body-md text-on-surface-variant opacity-80 text-center flex flex-wrap justify-center items-center gap-4">
             <span>© 2026 Beleza Sustentável. Todos os direitos reservados.</span>
             <span class="hidden md:inline opacity-40">|</span>
-            <a id="link-autor" href="#" class="text-primary hover:text-primary-container font-semibold transition-colors hover:underline flex items-center gap-1">
+            <a id="link-autor" href="#"
+                class="text-primary hover:text-primary-container font-semibold transition-colors hover:underline flex items-center gap-1">
                 <span class="material-symbols-outlined text-sm">person</span>
                 Sobre o Autor
             </a>
             <span class="hidden md:inline opacity-40">|</span>
-            <a id="link-readme" href="tutorial.html?tema=readme" class="text-primary hover:text-primary-container font-semibold transition-colors hover:underline flex items-center gap-1">
+            <a id="link-readme" href="tutorial.html?tema=readme"
+                class="text-primary hover:text-primary-container font-semibold transition-colors hover:underline flex items-center gap-1">
                 <span class="material-symbols-outlined text-sm">description</span>
                 Documentação do projeto
             </a>
         </p>
     </footer>
 
-    <!-- Modal "Sobre o Autor" -->
-    <div id="modal-autor" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 pointer-events-none transition-all duration-300 ease-in-out">
+    <!-- Modal "Sobre o autor" -->
+    <div id="modal-autor"
+        class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 pointer-events-none transition-all duration-300 ease-in-out">
         <!-- Overlay de desfoque -->
         <div id="modal-overlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm modal-overlay"></div>
-        
-        <!-- Card do Modal -->
-        <div class="relative bg-surface dark:bg-surface-container-low max-w-lg w-full mx-4 p-8 rounded-2xl shadow-2xl z-10 border border-outline-variant/20 transform scale-95 opacity-0 transition-all duration-300 ease-in-out modal-content">
+
+        <!-- Card do modal -->
+        <div
+            class="relative bg-surface dark:bg-surface-container-low max-w-lg w-full mx-4 p-8 rounded-2xl shadow-2xl z-10 border border-outline-variant/20 transform scale-95 opacity-0 transition-all duration-300 ease-in-out modal-content">
             <!-- Botão de fechar -->
-            <button id="modal-close" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary active:scale-95 duration-200 transition-colors" aria-label="Fechar modal">
+            <button id="modal-close"
+                class="absolute top-4 right-4 text-on-surface-variant hover:text-primary active:scale-95 duration-200 transition-colors"
+                aria-label="Fechar modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
-            
+
             <!-- Conteúdo renderizado -->
             <div id="modal-autor-body" class="prose max-w-none text-on-surface-variant">
                 <!-- O conteúdo de autor.md será injetado aqui -->
